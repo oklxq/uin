@@ -1,0 +1,48 @@
+@import "../../../style/vars";
+
+$name: n-input;
+$append-color: darken(#fff, 5);
+.#{$name} {
+  display: inline-table;
+  width: $default-width;
+  align-items: center;
+  border-collapse: separate;
+  border-spacing: 0;
+  @at-root &__raw {
+    border: solid 1px $border-color;
+    outline: none;
+    height: $height;
+    width: 100%;
+    display: table-cell;
+    float: left;
+    padding: 0 5px;
+    transition: all .2s;
+    position: relative;
+    z-index: 1;
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 5px -2px $primary-color;
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      background: $append-color;
+    }
+  }
+  [class$=end] {
+    border: solid 1px $border-color;
+    height: $height;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
+    border-right: none;
+    padding: 0 5px;
+    background: $append-color;
+    color: lighten(#000, 30);
+  }
+
+  [class$=append] {
+    border-left: none;
+    border-right: solid 1px $border-color;
+  }
+}

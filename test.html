@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./dist/uin.css">
+    <script crossorigin="anonymous" integrity="sha384-/akamCRnflySW3CYATb1tG4cZUVrkVT2+s6Q150JJNJ4mv8nhvL/V7rPgmzX8scM" src="https://lib.baomitu.com/vue/2.5.22/vue.min.js"></script>
+    <script src="./dist/uin.js"></script>
+    <style>
+        #app{
+            padding: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h3>{{name}}</h3>
+    <n-input ref="input" v-model="name" style="width: 300px" placeholder="禁用" @focus="fo">
+        <span slot="prepend">http://</span>
+        <span slot="append">@qq.com</span>
+    </n-input>
+    <n-select searchable style="width: 200px;"></n-select>
+</div>
+
+<script>
+    var app = new Vue({
+        data:{
+            name:'xxx'
+        },
+        el:'#app',
+        methods:{
+            fo(){
+                //alert();
+                console.log('fff')
+            }
+        }
+    })
+</script>
+</body>
+</html>

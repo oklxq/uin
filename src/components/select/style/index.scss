@@ -1,0 +1,32 @@
+$name: n-select;
+$border-color: darken(#fff, 10);
+.#{$name} {
+  position: relative;
+  @at-root &__display {
+    height: 30px;
+    border: solid 1px $border-color;
+  }
+
+  @at-root &__search{
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 0 0 -1px 0;
+    background: none;
+    border: solid 1px $border-color;
+  }
+  @at-root &__dropdown{
+    background: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    transform-origin: top center;
+    box-shadow: rgba(0,0,0,0.1) 0 5px 20px 0;
+    ul{
+      max-height: 200px;
+      overflow: auto;
+    }
+  }
+}
