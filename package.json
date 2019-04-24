@@ -11,6 +11,7 @@
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.0-beta.6",
     "css-loader": "^2.1.1",
+    "cz-conventional-changelog": "^2.1.0",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
@@ -22,5 +23,10 @@
   },
   "dependencies": {
     "vue": "^2.6.10"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
