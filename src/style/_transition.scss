@@ -2,12 +2,12 @@
 
 .dropdown-enter-active, .dropdown-leave-active {
   transform-origin: center top;
-  transition: transform $transition-time cubic-bezier(0.175, 0.885, 0.320, 1.275),opacity $transition-time;
+  transition: transform $transition-time cubic-bezier(0.175, 0.885, 0.320, 1.275),opacity $transition-time ease;
 }
 .dropdown-leave-active{
   transition-timing-function: cubic-bezier(0.600, -0.280, 0.735, 0.045);
 }
 .dropdown-enter,.dropdown-leave-to{
   opacity: 0;
-  transform: scaleY(0);
+  transform: scaleY(.7);
 }

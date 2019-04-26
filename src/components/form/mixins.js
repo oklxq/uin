@@ -6,7 +6,7 @@ export default {
         disabled: Boolean,
         readonly: Boolean,
         value: {
-            type: [Number, String],
+            type: [Number, String, Object],
             default: '',
         }
     },

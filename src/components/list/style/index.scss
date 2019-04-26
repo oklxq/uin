@@ -8,7 +8,6 @@ $name: n-list;
   border: solid 1px $border-color;
 
   li {
-    display: block;
     padding: 10px;
     transition: all .2s;
     &:not(:last-child) {
@@ -17,6 +16,9 @@ $name: n-list;
 
     &:hover {
       background: darken(#fff, 3);
+    }
+    &[selected]{
+      color: $primary-color;
     }
   }
 }

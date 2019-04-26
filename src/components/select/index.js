@@ -1,3 +1,6 @@
 import './style/index.scss';
 import Com from './Select';
-export default Com;
+import cOption from './Option';
+
+export const Select = Com;
+export const Option = cOption;

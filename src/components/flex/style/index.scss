@@ -1,0 +1,6 @@
+.n-flex {
+  display: flex;
+  @at-root &__item {
+    flex-grow: 1;
+  }
+}

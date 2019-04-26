@@ -1,32 +1,65 @@
 @import "../../../style/vars";
 
 $name: n-input;
-$append-color: darken(#fff, 5);
+$append-color: darken(#fff, 3);
 .#{$name} {
   display: inline-table;
   width: $default-width;
   align-items: center;
   border-collapse: separate;
   border-spacing: 0;
+  @at-root &--block{
+    display: table;
+    width: 100%;
+  }
   @at-root &__raw {
+    background: #fff;
     border: solid 1px $border-color;
     outline: none;
-    height: $height;
     width: 100%;
     display: table-cell;
     float: left;
-    padding: 0 5px;
+    padding: 0;
     transition: all .2s;
     position: relative;
     z-index: 1;
-    &:focus {
+    &:focus-within {
       border-color: $primary-color;
       box-shadow: 0 0 5px -2px $primary-color;
     }
+    &:hover{
+      .#{$name}__clear{
+        opacity: 1;
+      }
+    }
+    input{
+      border: none;
+      outline: none;
+      height: $height;
+      display: block;
+      margin: 0;
+      padding: 0 5px;
+      width: 100%;
+    }
+
 
     &[disabled] {
       cursor: not-allowed;
       background: $append-color;
+    }
+  }
+  @at-root &__clear{
+    cursor: pointer;
+    opacity: .05;
+    margin: 0 5px 0 0;
+    transition: opacity $transition-time;
+    >svg{
+      transition: transform $transition-time;
+    }
+    &:hover{
+      >svg{
+        transform: rotate(90deg);
+      }
     }
   }
   [class$=end] {

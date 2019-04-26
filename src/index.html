@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #app{
+            padding: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <n-input v-model="sel"></n-input>
+    <button @click="list=[5,6,7]">xx</button>
+    {{sel}}
+    <n-select placeholder="请选择" style="width: 200px;" v-model="sel">
+        <n-option v-for="item in list" :label="'选项'+item" :value="{id:item}" :key="item">选项{{item}}</n-option>
+    </n-select>
+</div>
+<script>
+    app = new Vue({
+        el:'#app',
+        data:{
+            list:[2,3,4],
+            sel:'2',
+        },
+
+    })
+</script>
+</body>
+</html>
