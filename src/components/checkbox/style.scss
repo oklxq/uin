@@ -41,7 +41,7 @@ $name: n-checkbox;
   }
 
   @at-root &__icon {
-    $size: $height - 10;
+    $size: $default-height - 10;
     display: inline-flex;
     align-items: center;
     justify-content: center;

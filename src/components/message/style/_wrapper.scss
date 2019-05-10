@@ -1,0 +1,10 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+
+.#{$prefix}message-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  text-align: center;
+}

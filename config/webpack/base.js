@@ -21,6 +21,11 @@ module.exports = {
                     name: 'fonts/uin-icon.[ext]'
                 }
             },
+
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader',
+            },
             {
                 test: /\.vue$/,
                 use: 'vue-loader',

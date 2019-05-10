@@ -11,7 +11,16 @@
 </head>
 <body>
 <div id="app">
+    <u-input clearable>
+        <span slot="append">@</span>
+    </u-input>
+    <u-btn type="primary">确定</u-btn>
+    <u-btn type="success">确定</u-btn>
+    <u-btn type="error">确定</u-btn>
+    <u-btn type="warning">确定</u-btn>
+    <u-slider v-model="p"></u-slider>
     <div>
+        {{p}}--
         {{c}}
     </div>
     <u-radio v-model="c" value="11">爱上的地方V型</u-radio>
@@ -26,8 +35,12 @@
             list:[2,3,4],
             sel:'2',
             c:'',
-            cs:[]
+            cs:[],
+            p:0,
         },
+        mounted(){
+            this.$Message.show('hello')
+        }
 
     })
 </script>

@@ -1,0 +1,31 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+@import "./wrapper";
+
+$name: #{$prefix}message;
+.#{$name}{
+  display: inline-flex;
+  border: solid 1px $border-color;
+  padding: 5px 10px;
+  align-items: center;
+
+  @each $type in success warning error{
+
+    &[class$=--#{$type}]{
+      [class$=icon]{
+        background-image: url("../../../assets/icons/#{$type}.png");
+      }
+    }
+  }
+
+  @at-root &__icon{
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    margin-right: 5px;
+
+  }
+}
