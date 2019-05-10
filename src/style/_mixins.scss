@@ -1,0 +1,5 @@
+@import "./vars";
+
+@mixin focus-shadow($blur:5px,$size:-2px) {
+  box-shadow: 0 0 $blur $size $primary-color;
+}

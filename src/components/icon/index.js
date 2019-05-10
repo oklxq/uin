@@ -1,6 +1,4 @@
-import feather from 'feather-icons';
 import './style.scss';
-
 export default {
     props: {
         type: {
@@ -13,14 +11,11 @@ export default {
         }
     },
     render(h) {
-        return h('span', {
-            'class': 'n-icon',
-            domProps: {
-                innerHTML: feather.icons[this.type].toSvg({
-                    width: this.size,
-                    height: this.size
-                }),
-            }
+        return h('i', {
+            'class': {
+                'uin-icon': true,
+                ['uin-icon--' + this.type]: true,
+            },
         });
     }
 }

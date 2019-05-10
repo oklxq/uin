@@ -1,0 +1,24 @@
+$name:n-split-panel;
+.#{$name}{
+  display: flex;
+  @at-root &__item{
+    position: relative;
+    height: 100px;
+    border: solid 1px red;
+    resize: horizontal;
+    width: 100px;
+    span.drag{
+      display: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 10px;
+      background: red;
+      cursor: ew-resize;
+    }
+    &:last-child .drag{
+      display: none;
+    }
+  }
+}

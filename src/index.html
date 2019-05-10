@@ -11,12 +11,13 @@
 </head>
 <body>
 <div id="app">
-    <n-input v-model="sel"></n-input>
-    <button @click="list=[5,6,7]">xx</button>
-    {{sel}}
-    <n-select placeholder="请选择" style="width: 200px;" v-model="sel">
-        <n-option v-for="item in list" :label="'选项'+item" :value="{id:item}" :key="item">选项{{item}}</n-option>
-    </n-select>
+    <div>
+        {{c}}
+    </div>
+    <u-radio v-model="c" value="11">爱上的地方V型</u-radio>
+    <u-radio v-model="c" value="22">22</u-radio>
+    <u-checkbox v-model="c" true-value="2" false-value="-2">加入组织</u-checkbox>
+
 </div>
 <script>
     app = new Vue({
@@ -24,6 +25,8 @@
         data:{
             list:[2,3,4],
             sel:'2',
+            c:'',
+            cs:[]
         },
 
     })

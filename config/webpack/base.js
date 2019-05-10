@@ -15,6 +15,13 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(ttf|woff|svg|eot)$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'fonts/uin-icon.[ext]'
+                }
+            },
+            {
                 test: /\.vue$/,
                 use: 'vue-loader',
             },

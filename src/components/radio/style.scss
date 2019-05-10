@@ -1,0 +1,65 @@
+@import "../../style/vars";
+@import "../../style/mixins";
+
+$name: n-radio;
+
+.#{$name} {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  cursor: pointer;
+  &+&{
+    margin-left: 5px;
+  }
+
+  input[type=radio] {
+    display: none;
+
+    &:checked + .n-radio__icon {
+      border-color: $primary-color;
+      &::after {
+        opacity: 1;
+        background: $primary-color;
+        transform: scale(1);
+      }
+    }
+
+    &:focus + .n-radio__icon {
+      border-color: $primary-color;
+      @include focus-shadow(2px, 0);
+    }
+  }
+
+  @at-root &__icon {
+    $size: $height - 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $size;
+    height: $size;
+    border-radius: $size/2;
+    border: solid 1px $border-color;
+    position: relative;
+    text-align: center;
+    transition: all $transition-time;
+    background: #fff;
+    &::after {
+      content: '';
+      width: $size / 2;
+      height: $size / 2;
+      border-radius: $size / 4;
+      display: inline-block;
+      background: #fff;
+      transform-origin: center;
+      opacity: 0;
+      transform: scale(.1);
+      transition: all $transition-time;
+    }
+  }
+  @at-root &__content {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+}
