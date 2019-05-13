@@ -3,29 +3,78 @@
 @import "./wrapper";
 
 $name: #{$prefix}message;
-.#{$name}{
+.#{$name} {
+  font-size: 14px;
   display: inline-flex;
   border: solid 1px $border-color;
   padding: 5px 10px;
   align-items: center;
 
-  @each $type in success warning error{
+  pointer-events: all;
+  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.15);
+  color: lighten(#000, 20);
+  max-width: 50%;
+  background: #fff;
 
-    &[class$=--#{$type}]{
-      [class$=icon]{
+  @each $type in success warning error {
+
+    &[class$=--#{$type}] {
+      [class$=icon] {
         background-image: url("../../../assets/icons/#{$type}.png");
       }
     }
   }
 
-  @at-root &__icon{
-    display: inline-block;
-    width: 1em;
+  @at-root &__icon {
+    width: 20px;
     height: 1em;
+    display: inline-block;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    margin-right: 5px;
+    flex-grow: 0;
+  }
+  @at-root &__content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    width: 100%;
+  }
+  @at-root &__extra {
+    white-space: nowrap;
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      transition: color $transition-time;
+      display: inline-block;
+      &:not(:last-child)::after{
+        content: '|';
+        margin: 0 5px 0 4px;
+      }
+      &:hover {
+        color: lighten($primary-color, 10);
+      }
+    }
 
   }
+}
+
+.u-message-row {
+  pointer-events: none;
+  margin-top: 5px;
+}
+
+.message-enter-active, .message-leave-active {
+  transition: all $transition-time cubic-bezier(0.175, 0.885, 0.320, 1.275), opacity $transition-time;
+}
+
+.message-leave-active {
+  transition-timing-function: cubic-bezier(0.600, -0.280, 0.735, 0.045);
+}
+
+.message-enter, .message-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+  height: 0 !important;
 }

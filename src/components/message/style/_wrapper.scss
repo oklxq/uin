@@ -7,4 +7,17 @@
   top: 0;
   right: 0;
   text-align: center;
+  pointer-events: none;
+  [size]{
+    position: fixed;
+    visibility: hidden;
+    top: -9999px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    >*{
+      display: block!important;
+      height: auto!important;
+    }
+  }
 }

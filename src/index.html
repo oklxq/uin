@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        #app{
+        #app {
             padding: 100px;
         }
     </style>
 </head>
 <body>
+<svg width="50" height="50">
+    <circle cx="25" cy="25" r="20" stroke="#ff0000" stroke-width="2" fill="transparent"></circle>
+</svg>
 <div id="app">
     <u-input clearable>
         <span slot="append">@</span>
     </u-input>
-    <u-btn type="primary">确定</u-btn>
+    <u-btn type="primary" @click.native="msg">确定</u-btn>
     <u-btn type="success">确定</u-btn>
     <u-btn type="error">确定</u-btn>
     <u-btn type="warning">确定</u-btn>
@@ -30,16 +33,32 @@
 </div>
 <script>
     app = new Vue({
-        el:'#app',
-        data:{
-            list:[2,3,4],
-            sel:'2',
-            c:'',
-            cs:[],
-            p:0,
+        el: '#app',
+        data: {
+            list: [2, 3, 4],
+            sel: '2',
+            c: '',
+            cs: [],
+            p: 0,
         },
-        mounted(){
-            this.$Message.show('hello')
+        mounted() {
+        },
+        methods: {
+            msg() {
+                this.$Message.show({
+                    content: '为了实现这个需求，我们需要为Clock组件添加”状态(state)”\n' +
+                        '\n' +
+                        '状态与属性十分相似，但是状态是私有的，完全受控于当前组件。\n' +
+                        '\n' +
+                        '我们之前提到过，定义为类的组件有一些额外的特性。局部状态就是如此：只能用于类的一个功能。，',
+                    type: 'success',
+                    duration: 0,
+                    extra: ['我知道了','撤销'],
+                    onExtra(data){
+                        console.log(data);
+                    }
+                })
+            }
         }
 
     })
