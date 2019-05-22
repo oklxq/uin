@@ -29,6 +29,15 @@ $name: n-radio;
       border-color: $primary-color;
       @include focus-shadow(2px, 0);
     }
+
+    &[disabled] + .n-radio__icon {
+      background-color: lighten($border-color, 3);
+      cursor: not-allowed;
+      border-color: $border-color!important;
+      &::after{
+        background-color: darken($border-color, 20);
+      }
+    }
   }
 
   @at-root &__icon {

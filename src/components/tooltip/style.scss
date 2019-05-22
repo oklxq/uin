@@ -1,0 +1,40 @@
+@import "../../style/vars";
+@import "../../style/mixins";
+
+
+$name: #{$prefix}tooltip;
+$color: lighten(#000, 30);
+.#{$name} {
+  position: absolute;
+  background: $color;
+  z-index: $tip-index;
+  color: #fff;
+  padding: 10px;
+  opacity: 0;
+  transition-property: transform, opacity, visibility;
+  transition-duration: $transition-time;
+  visibility: hidden;
+  transform-origin: bottom center;
+  transform: scale(.5);
+  box-shadow: 0 0 10px -2px rgba(0, 0, 0, .3);
+  @at-root &__content {
+
+  }
+  @at-root &--show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+  svg {
+    position: absolute;
+    bottom: -8px;
+    left: calc(50% - 5px);
+
+    path {
+      stroke: $color;
+      stroke-width: 1px;
+      fill: $color;
+    }
+
+  }
+}

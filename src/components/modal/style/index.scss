@@ -1,0 +1,124 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+@import "../../../style/fns";
+
+$name: #{$prefix}modal;
+$pd: 10px;
+$base-width: 500px;
+.#{$name} {
+  background: #fff;
+  width: $base-width;
+  position: relative;
+  top: 15vh;
+  margin: 0 auto;
+  @at-root &--sm {
+    width: $base-width - 100px;
+  }
+  @at-root &--lg {
+    width: $base-width + 100px;
+  }
+  &[center] {
+    top: 0;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: left;
+  }
+
+  @at-root &-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, .5);
+    z-index: $layer-index;
+    box-shadow: $focus-shadow;
+    &[center] {
+      text-align: center;
+
+      &::after {
+        content: '';
+        vertical-align: middle;
+        display: inline-block;
+        width: 0;
+        height: 100%;
+      }
+    }
+  }
+
+  @at-root &__title {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0 0 5px 0;
+    color: #000;
+  }
+  @at-root &__close {
+    cursor: pointer;
+    width: 20px;
+    text-align: center;
+  }
+  @at-root &__header {
+    border-bottom: solid 1px lighten($border-color, 5);
+    padding: $pd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  @at-root &__content {
+    padding: $pd*2 $pd + 5;
+    display: table;
+  }
+  @at-root &__icon {
+    display: table-cell;
+    padding-right: 20px;
+    vertical-align: top;
+    font-size: 40px;
+    color: $warning-color;
+    @each $type in success warning error{
+      &[class$=#{$type}]{
+        color: getColor($type);
+      }
+    }
+  }
+  @at-root &__main {
+    display: table-cell;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  @at-root &__footer {
+    padding: $pd;
+    border-top: solid 1px lighten($border-color, 5);
+    text-align: right;
+  }
+}
+
+
+.modal-enter-active, .modal-leave-active {
+  transition: opacity $transition-time;
+
+  .#{$name} {
+    transition: transform $transition-time $back-out, opacity $transition-time;
+  }
+}
+
+.modal-leave-active {
+  .#{$name} {
+    transition-timing-function: $back-in;
+  }
+}
+
+.modal-enter, .modal-leave-to {
+  opacity: 0;
+
+  .#{$name} {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+html, body {
+  &.has-modal {
+    overflow: hidden !important;
+  }
+}

@@ -1,5 +1,6 @@
 @import "../../../style/vars";
 @import "../../../style/mixins";
+@import "../../../style/fns";
 @import "./wrapper";
 
 $name: #{$prefix}message;
@@ -19,8 +20,8 @@ $name: #{$prefix}message;
   @each $type in success warning error {
 
     &[class$=--#{$type}] {
-      [class$=icon] {
-        background-image: url("../../../assets/icons/#{$type}.png");
+      .uin-icon {
+        color: getColor($type);
       }
     }
   }
@@ -43,6 +44,7 @@ $name: #{$prefix}message;
   }
   @at-root &__extra {
     white-space: nowrap;
+    margin-left: 10px;
     a {
       color: $primary-color;
       text-decoration: none;
@@ -56,7 +58,6 @@ $name: #{$prefix}message;
         color: lighten($primary-color, 10);
       }
     }
-
   }
 }
 

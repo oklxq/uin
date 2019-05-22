@@ -1,0 +1,22 @@
+@import "../../../style/vars";
+
+.u-form {
+
+  @at-root &__label{
+    text-align: right;
+    overflow: hidden;
+    line-height: $default-height;
+    >span{
+      display: inline-block;
+      line-height: 1.4em;
+    }
+
+  }
+  @at-root &__attach {
+    color: lighten(#000, 40);
+    margin-top: 5px;
+  }
+
+  @at-root &--horizontal{
+  }
+}

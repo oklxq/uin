@@ -7,6 +7,12 @@
         #app {
             padding: 100px;
         }
+
+        .box {
+            background: #ccc;
+            height: 100px;
+            border: solid 1px red;
+        }
     </style>
 </head>
 <body>
@@ -14,12 +20,39 @@
     <circle cx="25" cy="25" r="20" stroke="#ff0000" stroke-width="2" fill="transparent"></circle>
 </svg>
 <div id="app">
+    <u-table :max-height="200" hover dashed bordered :data="arr">
+        <u-table-column fixed="left" width="180" title="id" field="id">
+            <template v-slot:header="row">
+                <u-btn type="primary">表头</u-btn>
+            </template>
+            <template v-slot="row">
+                <p>hello</p>
+            </template>
+        </u-table-column>
+        <u-table-column v-for="i in 20" title="name" field="name"></u-table-column>
+    </u-table>
+    <br>
+    <br>
+    <br>
+
+    <span v-tooltip.click="'hellohellohelello'">hello</span>
+    <span>hello</span>
+    <span v-tooltip="'hellohellohelello'">sadasdadhello</span>
+    <u-checkbox checked disabled></u-checkbox>
+    <u-icon type="c-alert"></u-icon>
+    <u-modal async center header="提示" v-model="mo" @on-confirm="handleCon">
+        自定义页脚
+        更复杂的例子，自定义了页脚的按钮，点击提交后进入 loading 状态，完成后关闭。
+
+        不需要默认确定取消按钮时，你可以把 footer 设为 null。
+        <!--        <p v-for="i in 100">{{i}}-00asdasd</p>-->
+    </u-modal>
     <u-input clearable>
         <span slot="append">@</span>
     </u-input>
-    <u-btn type="primary" @click.native="msg">确定</u-btn>
-    <u-btn type="success">确定</u-btn>
-    <u-btn type="error">确定</u-btn>
+    <u-btn type="primary" :loading="mo2" @click.native="msg" v-tooltip.click="'hellohellohelello'">确定</u-btn>
+    <u-btn type="success" @click.native="mo=true">确定</u-btn>
+    <u-btn type="error" @click.native="shom">确定</u-btn>
     <u-btn type="warning">确定</u-btn>
     <u-slider v-model="p"></u-slider>
     <div>
@@ -27,37 +60,104 @@
         {{c}}
     </div>
     <u-radio v-model="c" value="11">爱上的地方V型</u-radio>
-    <u-radio v-model="c" value="22">22</u-radio>
-    <u-checkbox v-model="c" true-value="2" false-value="-2">加入组织</u-checkbox>
+    <u-radio disabled v-model="c" value="22">22</u-radio>
+    <u-checkbox indeterminate v-model="c" true-value="22" false-value="-2">加入组织</u-checkbox>
 
+    <br>
+    <br>
+
+    <u-form layout="horizontal">
+        <u-form-item label="状态">
+            <u-input style="width: 100%"></u-input>
+        </u-form-item>
+
+        <u-form-item label="名称">
+            <u-input style="width: 100%"></u-input>
+        </u-form-item>
+
+        <u-form-item label-span="1">
+            <u-btn type="primary" html-type="submit">确定</u-btn>
+            <u-btn>重置</u-btn>
+        </u-form-item>
+    </u-form>
+    <br>
+    <div class="box"></div>
+    <u-row gutter="1vw">
+        <u-col span-xs="24" span-sm="12" span="6" span-lg="3">
+            <div class="box"></div>
+        </u-col>
+        <u-col span-xs="24" span-sm="12" span="18" span-lg="12">
+            <div class="box"></div>
+        </u-col>
+    </u-row>
 </div>
 <script>
     app = new Vue({
         el: '#app',
         data: {
+            arr: Array.from({length: 5}, () => {
+                return {id: Math.random(), name: Math.random()}
+            }),
             list: [2, 3, 4],
             sel: '2',
             c: '',
             cs: [],
             p: 0,
+            mo: false,
+            mo2: false,
         },
         mounted() {
         },
         methods: {
+
+            handleCon(close) {
+                // console.log(close);
+                // close();
+                setTimeout(() => {
+                    this.mo = false;
+                }, 1000);
+            },
+            shom() {
+                this.$Modal.confirm('操作成功', 'sdadasdadad大叔大婶大').onConfirm(function () {
+                    console.log(this);
+                }.bind(this)).onClose(function () {
+
+                });
+                setTimeout(() => {
+                    // this.$Modal.error('操作成功', 'sdadasdadad大叔大婶大').onConfirm(function () {
+                    //     console.log(this);
+                    // }.bind(this)).onClose(function () {
+                    //
+                    // });
+                    // this.$Modal.closeAll();
+                }, 1000);
+                return;
+                this.$Modal.show({
+                    title: '删除？',
+                    content: 'hello',
+                    async: true,
+                    type: 'success',
+                    size: 'sm'
+                }).confirm(function (close) {
+                    // setTimeout(() => {
+                    //     close(true, false);
+                    // }, 1000);
+                }).close(function () {
+
+                });
+
+            },
             msg() {
                 this.$Message.show({
-                    content: '为了实现这个需求，我们需要为Clock组件添加”状态(state)”\n' +
-                        '\n' +
-                        '状态与属性十分相似，但是状态是私有的，完全受控于当前组件。\n' +
-                        '\n' +
-                        '我们之前提到过，定义为类的组件有一些额外的特性。局部状态就是如此：只能用于类的一个功能。，',
-                    type: 'success',
+                    content: '为了实现这个需求，我们需要为Clock组件添加”状态(',
+                    type: 'error',
                     duration: 0,
-                    extra: ['我知道了','撤销'],
-                    onExtra(data){
+                    extra: ['我知道了', '撤销'],
+                    onExtra(data) {
                         console.log(data);
                     }
-                })
+                });
+
             }
         }
 

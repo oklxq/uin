@@ -1,0 +1,30 @@
+@import "./vars";
+.#{$name}-sim-border{
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $border-color;
+  bottom: 0;
+  z-index: 5;
+  &[top]{
+    top: 0;
+    bottom: auto;
+  }
+  &[left]{
+    height: auto;
+    top: 0;
+    bottom: 0;
+    right: auto;
+    width: 1px;
+    left: 0;
+  }
+  &[right]{
+    height: auto;
+    top: 0;
+    bottom: 0;
+    left: auto;
+    width: 1px;
+    right: 0;
+  }
+}

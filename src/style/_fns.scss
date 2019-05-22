@@ -1,0 +1,13 @@
+@import "./vars";
+
+@function getColor($type) {
+  @if ($type==primary) {
+    @return $primary-color;
+  } @else if ($type==error) {
+    @return $error-color;
+  } @else if ($type==success) {
+    @return $success-color;
+  } @else if ($type==warning) {
+    @return $warning-color;
+  }
+}

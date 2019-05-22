@@ -1,0 +1,57 @@
+@import "../../style/vars";
+@import "../../style/mixins";
+
+$name: #{$prefix}row;
+.#{$name} {
+  &::after{
+    content: '';
+    height: 0;
+    width: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+}
+
+.u-col {
+  float: left;
+  @for $i from 1 through 24 {
+    @at-root &--span-#{$i} {
+      width: $i / 24 * 100 + 0%;
+    }
+  }
+}
+
+
+$xs: 768px;
+$sm: 992px;
+
+@media screen and (max-width: 768px) {
+  .u-col {
+    @for $i from 1 through 24 {
+      @at-root &--span-xs-#{$i} {
+        width: $i / 24 * 100 + 0%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .u-col {
+    @for $i from 1 through 24 {
+      @at-root &--span-sm-#{$i} {
+        width: $i / 24 * 100 + 0%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .u-col {
+    @for $i from 1 through 24 {
+      @at-root &--span-lg-#{$i} {
+        width: $i / 24 * 100 + 0%;
+      }
+    }
+  }
+}

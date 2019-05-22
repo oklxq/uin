@@ -11,7 +11,12 @@ import {SplitPanel, SplitPanelItem} from "./components/split-panel";
 import {Checkbox, CheckboxGroup} from "./components/checkbox";
 import {Radio, RadioGroup} from "./components/radio";
 import Slider from './components/slider';
-import Button from './components/button'
+import Button from './components/button';
+import $Modal from './components/modal';
+import {Table, Column as TableColumn} from "./components/table";
+import {Form, FormItem} from "./components/form";
+import {Row,Col} from "./components/grid";
+import './components/tooltip';
 
 Vue.component('u-btn', Button);
 Vue.component('u-select', Select);
@@ -27,4 +32,11 @@ Vue.component('u-checkbox-group', CheckboxGroup);
 Vue.component('u-radio', Radio);
 Vue.component('u-radio-group', RadioGroup);
 Vue.component('u-slider', Slider);
+Vue.component('u-modal', $Modal);
+Vue.component('u-table', Table);
+Vue.component('u-table-column', TableColumn);
+Vue.component('u-form', Form);
+Vue.component('u-form-item', FormItem);
+Vue.component('u-row', Row);
+Vue.component('u-col', Col);
 export default {};

@@ -1,7 +1,7 @@
 <template>
-    <label class="n-checkbox" :for="uid">
-        <input :id="uid" type="checkbox" v-on="listeners" :checked="isChecked">
-        <span class="n-checkbox__icon"></span>
+    <label class="n-checkbox" :class="{'n-checkbox--ind':indeterminate}" :for="uid">
+        <input :disabled="disabled" :id="uid" type="checkbox" v-on="listeners" :checked="isChecked">
+        <span class="n-checkbox__icon"><Icon type="check"></Icon></span>
         <div class="n-checkbox__content">
             <slot></slot>
         </div>
@@ -9,9 +9,11 @@
 </template>
 
 <script>
+    import Icon from '../icon';
     let instanceId = 0;
     export default {
         name: "Checkbox",
+        components:{Icon},
         inject: {
             group: {
                 from: 'group',
@@ -20,6 +22,7 @@
         },
         props: {
             checked: Boolean,
+            disabled: Boolean,
             value: {
                 type: [Boolean, String, Number],
             },
@@ -31,6 +34,7 @@
                 type: [Boolean, String, Number],
                 default: false,
             },
+            indeterminate: Boolean,
         },
         watch: {
             value() {

@@ -1,0 +1,8 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+
+.u-form__item {
+  & + & {
+    margin-top: 20px;
+  }
+}

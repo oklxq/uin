@@ -2,7 +2,9 @@
     <transition name="message" @after-leave="handleAfterLeave">
         <div v-show="visible" class="u-message-row">
             <div class="u-message" :class="{['u-message--'+type]:true}">
-                <span class="u-message__icon"></span>
+                <Icon class="u-message__icon" type="c-success" v-if="type==='success'"></Icon>
+                <Icon class="u-message__icon" type="c-alert" v-if="type==='warning'"></Icon>
+                <Icon class="u-message__icon" type="c-error" v-if="type==='error'"></Icon>
                 <div class="u-message__content">{{content}}</div>
                 <div class="u-message__extra" v-if="extra.length">
                     <a href="javascript:;" v-for="(e,index) in extra" :key="e"
@@ -15,16 +17,17 @@
 
 <script>
     import {Flex, FlexItem} from "../flex";
+    import Icon from '../icon';
 
     export default {
         name: "Message",
-        components: {Flex, FlexItem},
+        components: {Flex, FlexItem, Icon},
         props: {
             visible: Boolean,
             type: {
                 type: String,
                 validator(val) {
-                    return ['success', 'error', 'warning', 'confirm'].indexOf(val) >= 0;
+                    return ['success', 'error', 'warning'].indexOf(val) >= 0;
                 }
             },
             content: String,
@@ -33,6 +36,7 @@
                 default: () => [],
             }
         },
+
         methods: {
             handleExtraClick(index, value) {
                 this.$emit('on-extra', {

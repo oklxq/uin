@@ -7,6 +7,13 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.css/,
+                use: [
+                    MiniCssPlugin.loader,
+                    'css-loader',
+                ]
+            },
+            {
                 test: /\.scss/,
                 use: [
                     MiniCssPlugin.loader,
@@ -15,7 +22,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(ttf|woff|svg|eot)$/,
+                test: /\.(ttf|woff|svg|eot)/,
                 loader: 'file-loader',
                 options: {
                     name: 'fonts/uin-icon.[ext]'

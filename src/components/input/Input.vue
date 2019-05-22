@@ -29,10 +29,11 @@
     import mixins from '../form/mixins';
     import Icon from '../icon';
     import {FlexItem, Flex} from "../flex";
+    import {size} from "../../utils/props";
 
     let instanceId = 0;
     export default {
-        mixins: [mixins],
+        mixins: [mixins, size],
         name: "Input",
         components: {Icon, Flex, FlexItem},
         watch: {

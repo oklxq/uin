@@ -1,6 +1,6 @@
 <template>
     <label class="n-radio" :for="uid">
-        <input :name="name" :id="uid" type="radio" v-on="listeners" :checked="isChecked">
+        <input :disabled="disabled" :name="name" :id="uid" type="radio" v-on="listeners" :checked="isChecked">
         <span class="n-radio__icon"></span>
         <div class="n-radio__content">
             <slot></slot>
@@ -20,6 +20,7 @@
         },
         props: {
             name:String,
+            disabled:Boolean,
             checked: [Boolean, Number, String],
         },
         watch: {
