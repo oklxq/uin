@@ -1,22 +1,28 @@
 <template>
-    <div class="u-table-wrapper">
-        <slot></slot>
-        <span v-if="bordered" class="u-table-sim-border" top></span>
-        <span v-if="bordered" class="u-table-sim-border" left></span>
-        <span v-if="bordered" class="u-table-sim-border" right></span>
-        <RawTable></RawTable>
-        <RawTable fixed="top" v-if="maxHeight"></RawTable>
-        <RawTable fixed="left" v-if="leftColumns.length"></RawTable>
-        <RawTable fixed="top-left" v-if="leftColumns.length && maxHeight"></RawTable>
+    <div class="u-table-group">
+        <div class="u-table-wrapper">
+            <slot></slot>
+            <span v-if="bordered" class="u-table-sim-border" top></span>
+            <span v-if="bordered" class="u-table-sim-border" left></span>
+            <span v-if="bordered" class="u-table-sim-border" right></span>
+            <RawTable></RawTable>
+            <RawTable fixed="top" v-if="maxHeight"></RawTable>
+            <RawTable fixed="left" v-if="leftColumns.length"></RawTable>
+            <RawTable fixed="top-left" v-if="leftColumns.length && maxHeight"></RawTable>
+        </div>
+        <div class="u-table__footer">
+            <Pagination :total-page="100"></Pagination>
+        </div>
     </div>
 </template>
 
 <script>
     import RawTable from './Table';
+    import Pagination from './Pagination';
 
     export default {
         name: "Wrapper",
-        components: {RawTable},
+        components: {RawTable, Pagination},
         provide() {
             return {
                 wrapper: this,

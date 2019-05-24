@@ -1,6 +1,8 @@
 import './style/index.scss';
-import Wrapper from './Wrapper';
-import column from './column';
+import $Table from './Wrapper';
+import $Column from './column';
+import $Pagination from './Pagination';
 
-export const Table = Wrapper;
-export const Column = column;
+export const Table = $Table;
+export const Column = $Column;
+export const Pagination = $Pagination;

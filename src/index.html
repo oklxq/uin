@@ -13,13 +13,53 @@
             height: 100px;
             border: solid 1px red;
         }
+        [v-cloak]{
+            display: none;
+        }
     </style>
 </head>
 <body>
 <svg width="50" height="50">
     <circle cx="25" cy="25" r="20" stroke="#ff0000" stroke-width="2" fill="transparent"></circle>
 </svg>
-<div id="app">
+<div id="app" v-cloak>
+    <u-tab>
+        <u-tab-item title="2">
+            methods: {
+            handler(){
+            this.vnode = this.$render(this.vnode);
+            }
+            }
+            注: 我也不想用complie把父组件html变成vnode, 请问有什么好的最佳实践吗?
+
+            自己回答下,
+            实例上有$createElement(), 所以上面可以改完
+
+            methods: {
+            handler(){
+            this.vnode = this.$createElement('<v-xxx/>');
+            }
+            } ```
+        </u-tab-item>
+        <u-tab-item title="3">
+            何时使用#
+            提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
+            <br>
+            Ant Design 依次提供了三级选项卡，分别用于不同的场景。
+            <br>
+
+            卡片式的页签，提供可关闭的样式，常用于容器顶部。
+            <br>
+
+            标准线条式页签，用于容器内部的主功能切换，这是最常用的 Tabs。
+
+            RadioButton 可作为更次级的页签来使用。
+
+
+        </u-tab-item>
+    </u-tab>
+    <br>
+    <br>
     <u-table :max-height="200" hover dashed bordered :data="arr">
         <u-table-column fixed="left" width="180" title="id" field="id">
             <template v-slot:header="row">

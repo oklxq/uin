@@ -1,0 +1,74 @@
+@import "../../../style/vars";
+
+$size: 35px;
+.u-pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  display: inline-block;
+
+
+  li {
+    font-size: 14px;
+    display: inline-block;
+    min-width: $size;
+    line-height: $size - 5px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    padding: 0 5px;
+    border: solid 1px $border-color;
+
+    &[disabled] {
+      cursor: not-allowed;
+      background: $disabled-color;
+    }
+
+    &[active] {
+      background: $primary-color;
+      //border-color: $primary-color;
+      color: #fff;
+      z-index: 2;
+
+      &::after {
+        border: solid 1px $primary-color;
+        left: -1px;
+        right: -1px;
+        top: -1px;
+        bottom: -1px;
+        content: '';
+        position: absolute;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: -1px;
+      //border-right: solid 1px $border-color;
+    }
+
+    &:hover:not([class$=jump]) {
+      background: darken(#fff, 4);
+
+      &[active] {
+        background: lighten($primary-color, 2);
+      }
+    }
+  }
+
+  @at-root &__jump {
+    padding: 0 10px;
+    margin-left: 10px;
+    input {
+      border: none;
+      width: auto;
+      min-width: $size;
+      outline: none;
+      text-align: center;
+    }
+
+  }
+
+}
