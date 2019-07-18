@@ -8,10 +8,17 @@
 const offset = 8;
 import {getDocumentScroll} from "../../utils";
 
-let tipTarget = null;
+let delayId = 0;
 
 function init() {
     const dom = document.createElement('div');
+    dom.$tipMeta = {};
+    dom.addEventListener('mouseenter', () => {
+        clearTimeout(delayId);
+    });
+    dom.addEventListener('mouseout', () => {
+        !dom.$trigger && handleHide();
+    });
     dom.className = 'u-tooltip';
     const content = document.createElement('div');
     content.className = 'u-tooltip__content';
@@ -32,7 +39,6 @@ const {dom, content} = init();
 
 function attach(target, val) {
 
-    tipTarget = target;
     const {innerWidth, innerHeight} = window;
     content.innerHTML = val;
     document.body.appendChild(dom);
@@ -59,40 +65,46 @@ function attach(target, val) {
     dom.classList.add('u-tooltip--show');
 }
 
-function handleMouseOver(evt) {
-    tipTarget = null;
+function handleShow(evt) {
+    clearTimeout(delayId);
     const {currentTarget} = evt;
+    dom.$trigger = currentTarget.$tipTrigger;
     attach(currentTarget, currentTarget.$tipContent);
+    evt.stopPropagation();
 }
 
-function handleMouseOut() {
-    dom.classList.remove('u-tooltip--show');
+function handleHide() {
+    delayId = setTimeout(() => {
+        dom.classList.remove('u-tooltip--show');
+    }, 0);
 }
 
 function handleClick(evt) {
-    const {currentTarget} = evt;
-    attach(currentTarget, currentTarget.$tipContent);
+    evt.stopPropagation();
+    evt.currentTarget.$tipTrigger && handleShow(evt);
 }
 
 export default {
     bind(el, bind) {
-        const trigger = bind.modifiers.click ? 'click' : 'mouseenter';
         el.$tipContent = bind.value;
-        el.addEventListener(trigger, handleMouseOver);
-        if (trigger === 'mouseenter') {
-            el.addEventListener('mouseleave', handleMouseOut);
-        } else {
-            document.addEventListener('click', evt => {
-                if (tipTarget === el) {
-                    if (!dom.contains(evt.target) && !el.contains(evt.target)) {
-                        handleMouseOut();
-                    }
-                }
-
-            })
+        el.$tipTrigger = bind.modifiers.click;
+        el.addEventListener('click', handleClick);
+        el.$docHandler = evt => {
+            !dom.contains(evt.target) && !el.contains(evt.target) && handleHide();
+        };
+        document.addEventListener('click', el.$docHandler);
+        if (!bind.modifiers.click) {
+            el.addEventListener('mouseenter', handleShow);
+            el.addEventListener('mouseleave', handleHide);
         }
-        // el.addEventListener('mouseover', handleMouseOver);
+    },
+    update(el, bind) {
+        el.$tipContent = bind.value;
     },
     unbind(el) {
+        el.removeEventListener('click', handleShow);
+        el.removeEventListener('mouseenter', handleShow);
+        el.removeEventListener('mouseleave', handleHide);
+        document.removeEventListener('click', el.$docHandler);
     }
 }

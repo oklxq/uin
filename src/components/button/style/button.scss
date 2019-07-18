@@ -1,0 +1,108 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+@import "../../../style/fns";
+
+$name: #{$prefix}btn;
+$bg-color: lighten($border-color, 5);
+
+.#{$name} {
+  position: relative;
+  border: solid 1px $border-color;
+  height: $default-height;
+  background: $bg-color;
+  outline: none;
+  padding: 0 1rem;
+  transition: all $transition-time;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: 100%;
+  white-space: nowrap;
+  font-size: inherit;
+  border-radius: $radius;
+  @include relief($border-color);
+  @at-root &--sm {
+    height: $sm-height;
+    padding: 0 .6rem;
+  }
+  @at-root &--lg {
+    height: $lg-height;
+    padding: 0 1.4rem;
+  }
+
+  .u-spin, .uin-icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &:hover, &:hover {
+    &:not([disabled]) {
+      background: darken($bg-color, 2);
+    }
+  }
+
+  &:active {
+    background: darken($bg-color, 8) !important;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    top: -1px;
+    bottom: -1px;
+    background: #fff;
+    border-radius: $radius;
+    transition: $transition-time;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+
+    &::after {
+      opacity: .3;
+    }
+  }
+
+  * {
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @at-root &__content {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  @each $type in primary, success, warning, error {
+    $color: getColor($type);
+    @at-root &--#{$type} {
+      background: $color;
+      color: #fff;
+      border-color: $color;
+      @include relief($color);
+      .u-spin {
+        stroke: #fff;
+      }
+
+      &:hover, &:focus {
+        &:not([disabled]) {
+          background: darken($color, 5);
+          border-color: darken($color, 5);
+          @include relief($color);
+        }
+      }
+
+      &:active {
+        background: darken($color, 8) !important;
+        border-color: darken($color, 8) !important;
+      }
+    }
+  }
+
+  @at-root &--link {
+    background: transparent;
+    border: none;
+  }
+}

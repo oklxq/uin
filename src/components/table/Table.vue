@@ -3,7 +3,7 @@
         <table>
             <thead v-if="wrapper.showHeader">
             <tr>
-                <TableCell v-for="col in wrapper.sortedColumns"
+                <TableCell v-for="col in columns"
                            :key="col._uid"
                            :fixed="fixed"
                            type="th"
@@ -13,7 +13,7 @@
 
             <tbody v-if="!isTop">
             <tr v-for="data in wrapper.data">
-                <TableCell v-for="col in wrapper.sortedColumns"
+                <TableCell v-for="col in columns"
                            :key="col._uid"
                            :fixed="fixed"
                            type="td"
@@ -29,19 +29,26 @@
 <script>
     import TableCell from './cell';
     import {getScrollBarSize} from "../../utils";
-
-    const EVENT_UPDATE_SIZE = 'update-size';
-    const EVENT_SCROLL = 'scroll';
-
-
+    /**
+     * 完整的表格分为6个部分
+     * 1.主表
+     * 2.左侧固定列
+     * 3.右侧固定列
+     * 4.头部固定行
+     * 5.左上角固定单元格
+     * 6.右上角固定单元格
+     * 表格宽度同步流程：
+     * 1.计算主表中每个th的宽度
+     * 2.其它副表动态设置自身th宽度
+     * 3.设置副表wrapper为合适的高度/宽度
+     * 4.滚动时，同步主表滚动位置到副表
+     */
     // 计算主表格尺寸
     function computeSize() {
         const {$el} = this;
         const table = $el.querySelector('table');
-
         const hs = $el.querySelectorAll('thead th');
         const sizes = [];
-
         for (let i = 0; i < hs.length; i++) {
             sizes.push({
                 width: hs[i].offsetWidth,
@@ -49,30 +56,24 @@
                 fixed: hs[i].dataset.fixed,
             });
         }
-        const hasHScroll = $el.scrollHeight > $el.clientHeight;
-        const hasVScroll = $el.scrollWidth > $el.clientWidth;
-        this.wrapper.$emit(EVENT_UPDATE_SIZE, {
+        const hasHScroll = $el.offsetHeight > $el.clientHeight;
+        const hasVScroll = $el.offsetWidth > $el.clientWidth;
+        this.wrapper.__resize__({
             colSize: sizes,
-            wrapperSize: table.scrollWidth,
-            hasVScroll,
+            wrapperSize: table.clientWidth,
             hasHScroll,
+            hasVScroll
         });
     }
-
     // 计算固定表格尺寸
     function computeFixedSize(data) {
         const {$el} = this;
         const table = $el.querySelector('table');
-        const old = $el.querySelector('colgroup');
-        old && old.remove();
+        const hs = $el.querySelectorAll('thead th');
         const {colSize, wrapperSize} = data;
-        const group = document.createElement('colgroup');
-        const arr = [];
         for (let i = 0; i < colSize.length; i++) {
-            arr.push(`<col width="${colSize[i].width}"/>`)
+            hs[i] && hs[i].setAttribute('width', colSize[i].width);
         }
-        group.innerHTML = arr.join('');
-        table.appendChild(group);
         table.style.width = wrapperSize + 'px';
         if (this.isLeft) {
             const leftSize = colSize.filter(o => o.fixed === 'left').reduce((a, b) => a + b.width, 0);
@@ -88,7 +89,6 @@
             }
         }
     }
-
     // 更新滚动位置
     function updatePosition(data) {
         if (this.isLeft && this.isTop) {
@@ -102,27 +102,6 @@
             this.$el.scrollTop = scrollTop;
         }
     }
-
-    function init() {
-        this.$el.addEventListener('scroll', evt => {
-            const {scrollLeft, scrollTop} = evt.target;
-            this.wrapper.$emit(EVENT_SCROLL, {
-                scrollLeft,
-                scrollTop,
-            });
-        });
-        this.wrapper.$on('update', () => {
-            computeSize.call(this);
-        });
-    }
-
-    function initFixed() {
-        this.wrapper.$on(EVENT_SCROLL, updatePosition.bind(this));
-        this.wrapper.$on(EVENT_UPDATE_SIZE, data => {
-            computeFixedSize.call(this, data);
-        });
-    }
-
     export default {
         name: "Table",
         inject: ['wrapper'],
@@ -131,6 +110,13 @@
             fixed: String,
         },
         computed: {
+            columns() {
+                if (this.isLeft) {
+                    return this.wrapper.leftColumns;
+                }
+                return this.wrapper.sortedColumns;
+
+            },
             classList() {
                 return {
                     'u-table--hover': this.wrapper.hover,
@@ -159,16 +145,26 @@
                 return /left/.test(this.fixed);
             },
         },
-
         mounted() {
-            this.fixed ? initFixed.call(this) : init.call(this);
-            setTimeout(() => {
-                if (!this.fixed) {
+            if (!this.fixed) {
+                this.$el.addEventListener('scroll', evt => {
+                    const {scrollLeft, scrollTop} = evt.target;
+                    this.wrapper.__scroll__({
+                        scrollLeft, scrollTop
+                    });
+                });
+                setTimeout(() => {
                     computeSize.call(this);
-                } else {
-                }
-            }, 0);
+                }, 0);
+            }
         },
-        methods: {}
+        methods: {
+            resize(data) {
+                computeFixedSize.call(this, data);
+            },
+            scroll(data) {
+                updatePosition.call(this, data);
+            }
+        }
     }
 </script>

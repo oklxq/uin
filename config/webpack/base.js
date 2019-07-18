@@ -1,6 +1,7 @@
-const MiniCssPlugin = require('mini-css-extract-plugin');
 const {VueLoaderPlugin} = require('vue-loader');
 const LodashPlugin = require('lodash-webpack-plugin');
+const MiniCssPlugin = require('mini-css-extract-plugin');
+
 module.exports = {
     entry: './src/index.js',
 

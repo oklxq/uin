@@ -1,0 +1,58 @@
+@import "../../../style/vars";
+@import "../../../style/mixins";
+@import "../../../style/fns";
+
+$btn-name: #{$prefix}btn;
+$name: #{$btn-name}-group;
+
+.#{$name} {
+  vertical-align: middle;
+  display: inline-block;
+  @include clear;
+  @at-root &--row {
+    .#{$btn-name} {
+      float: left;
+
+      &:not(:last-child):not(:first-child) {
+        border-radius: 0;
+      }
+
+      &:not(:last-child) {
+        margin-right: -1px;
+      }
+
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+  @at-root &--column{
+    .#{$btn-name} {
+      display: block;
+      &:not(:last-child):not(:first-child) {
+        border-radius: 0;
+      }
+
+      &:not(:first-child) {
+        margin-top: -1px;
+      }
+
+      &:first-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:last-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  }
+
+}

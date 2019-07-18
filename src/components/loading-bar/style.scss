@@ -1,0 +1,20 @@
+@import "../../style/vars";
+
+$name: #{$prefix}loading-bar;
+.#{$name} {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  pointer-events: none;
+  @at-root &__progress {
+    transition: opacity $transition-time,background-color $transition-time;
+    height: 2px;
+    background: $primary-color;
+    transform-origin: left;
+    @at-root &--error {
+      background-color: $error-color;
+    }
+  }
+
+}

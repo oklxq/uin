@@ -1,6 +1,7 @@
 import $Modal, {closeAll} from './Modal';
-import {callFn} from "../../utils";
+import runBeforeClose from './before-close';
 import './style/index.scss';
+import {callFn} from "../../utils";
 
 export default $Modal;
 
@@ -29,9 +30,15 @@ function init() {
                 showClose = true,
                 showCancel = true,
                 icon,
+                center = false,
+                beforeClose = null,
+                onConfirm = null,
+                onCancel = null,
+                confirmText = '确定',
+                cancelText = '取消',
             } = config;
-
-            el.icon=icon;
+            el.center = center;
+            el.icon = icon;
             el.size = size;
             el.type = type;
             el.title = title;
@@ -40,53 +47,46 @@ function init() {
             el.async = async;
             el.showClose = showClose;
             el.showCancel = showCancel;
+            el.confirmText = confirmText;
+            el.cancelText = cancelText;
+            if (type && !icon) {
+                el.icon = 'c-' + type;
+            }
             const dom = el.$mount().$el;
             document.body.append(dom);
             el.value = true;
-
-            let onConfirm = null;
-            let onClose = null;
-
+            el.$on('on-cancel', () => {
+                el.value = false;
+                callFn(onCancel);
+            });
 
             el.$on('on-confirm', () => {
-                if (!async) {
+                const cb = () => {
                     el.value = false;
-                    callFn(onConfirm);
+                    typeof onConfirm === 'function' && onConfirm();
+                };
+                if (beforeClose) {
+                    runBeforeClose.call(el, beforeClose, cb);
                 } else {
-                    callFn(onConfirm, function () {
-                        el.loading = !(!!arguments[0]);
-                        el.value = !(!!arguments[1]);
-                    });
+                    cb();
                 }
             });
 
-            el.$on('on-close', () => {
-                el.value = false;
-            });
-            return {
-                onConfirm: function (fn) {
-                    onConfirm = fn;
-                    return this;
-                },
-                onClose: function (fn) {
-                    onClose = fn;
-                    return this;
-                }
-            };
+            return el;
         },
 
 
         success(title, content) {
-            return this.show(getCommon({title, content,icon:'c-success'}));
+            return this.show(getCommon({title, content, icon: 'c-success'}));
         },
         error(title, content) {
-            return this.show(getCommon({title, content, type: 'error',icon:'c-error'}));
+            return this.show(getCommon({title, content, type: 'error', icon: 'c-error'}));
         },
         warning(title, content) {
-            return this.show(getCommon({title, content, type: 'warning',icon:'c-warning'}));
+            return this.show(getCommon({title, content, type: 'warning', icon: 'c-warning'}));
         },
         confirm(title, content) {
-            return this.show(getCommon({title, content, type: 'confirm', showCancel: true,icon:'c-confirm'}));
+            return this.show(getCommon({title, content, type: 'confirm', showCancel: true, icon: 'c-confirm'}));
         },
         closeAll() {
             closeAll();

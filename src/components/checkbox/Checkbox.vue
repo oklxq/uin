@@ -2,9 +2,9 @@
     <label class="n-checkbox" :class="{'n-checkbox--ind':indeterminate}" :for="uid">
         <input :disabled="disabled" :id="uid" type="checkbox" v-on="listeners" :checked="isChecked">
         <span class="n-checkbox__icon"><Icon type="check"></Icon></span>
-        <div class="n-checkbox__content">
+        <span class="n-checkbox__content">
             <slot></slot>
-        </div>
+        </span>
     </label>
 </template>
 

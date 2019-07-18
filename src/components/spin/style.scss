@@ -1,0 +1,25 @@
+@import "../../style/vars";
+
+$name: #{$prefix}spin;
+
+@keyframes spin {
+  0% {
+    stroke-dasharray: 100%, 9999;
+  }
+  50% {
+    stroke-dasharray: 20%, 9999;
+    stroke-dashoffset: 10%;
+  }
+  100% {
+    stroke-dasharray: 100%, 9999;
+  }
+
+}
+
+.#{$name} {
+  stroke: #000;
+  animation: rotate .8s infinite linear;
+  > circle {
+    animation: spin 2s infinite linear;
+  }
+}

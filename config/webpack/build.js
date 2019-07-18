@@ -1,6 +1,8 @@
 const merge = require('webpack-merge');
 const base = require('./base');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssPlugin = require('mini-css-extract-plugin');
+
 module.exports = merge(base, {
     mode: 'production',
     output: {
@@ -8,6 +10,25 @@ module.exports = merge(base, {
         library: 'uin',
         libraryExport: 'default',
         libraryTarget: 'umd',
+    },
+    module:{
+        rules:[
+            {
+                test: /\.css/,
+                use: [
+                    MiniCssPlugin.loader,
+                    'css-loader',
+                ]
+            },
+            {
+                test: /\.scss/,
+                use: [
+                    MiniCssPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+        ]
     },
     externals: {
         vue: {
@@ -19,5 +40,10 @@ module.exports = merge(base, {
     },
     optimization: {
         minimizer: [new UglifyPlugin()],
-    }
+    },
+    plugins:[
+        new MiniCssPlugin({
+            filename: 'uin.css',
+        }),
+    ]
 });

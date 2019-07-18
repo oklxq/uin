@@ -1,0 +1,14 @@
+@import "../../style/vars";
+@import "../../style/mixins";
+
+$name: #{$prefix}dropdown;
+
+.#{$name} {
+  position: relative;
+
+  @at-root &__menu {
+    position: absolute;
+    left: 0;
+    top: 100%;
+  }
+}

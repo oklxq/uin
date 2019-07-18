@@ -3,3 +3,18 @@
 @mixin focus-shadow($blur:5px,$size:-2px) {
   box-shadow: 0 0 $blur $size $primary-color;
 }
+
+@mixin relief($color) {
+  border-bottom-color: darken($color, 15);
+}
+
+@mixin clear(){
+  &::after{
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+}

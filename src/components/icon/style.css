@@ -27,6 +27,9 @@
 .uin-icon--c-alert:before {
     content: "\ea14";
 }
+.uin-icon--c-warning:before {
+    content: "\ea14";
+}
 .uin-icon--c-success:before {
     content: "\ea15";
 }

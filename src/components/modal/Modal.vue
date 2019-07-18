@@ -7,7 +7,7 @@
                         <slot name="header" v-if="$slots.header"></slot>
                         <span v-else-if="!!header" v-html="header"></span>
                     </div>
-                    <div class="u-modal__close" @click="close">
+                    <div class="u-modal__close" @click="cancel">
                         <Icon type="x"></Icon>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
                 <div class="u-modal__footer">
                     <slot v-if="$slots.footer" name="footer"></slot>
                     <template v-else>
-                        <Btn v-if="showCancel" @click.native="close">{{cancelText}}</Btn>
-                        <Btn :loading="loading" @click.native="confirm" type="primary">{{confirmText}}</Btn>
+                        <Btn v-if="showCancel" @click="cancel" type="link">{{cancelText}}</Btn>
+                        <Btn :loading="loading" @click="confirm" type="primary">{{confirmText}}</Btn>
                     </template>
                 </div>
             </div>
@@ -40,6 +40,7 @@
     import Btn from '../button';
     import Icon from '../icon';
     import {title, size} from '../../utils/props';
+    import beforeClose from './before-close';
 
     const Instances = [];
 
@@ -47,11 +48,10 @@
         document.addEventListener('keydown', (evt) => {
             if (evt.key.toLowerCase() === 'escape') {
                 if (Instances.length) {
-                    Instances[Instances.length - 1].close();
+                    Instances[Instances.length - 1].cancel();
                 }
             }
         });
-
     }
 
     export function closeAll() {
@@ -137,22 +137,25 @@
 
         methods: {
             handleMaskClick() {
-                this.maskClosable && this.close();
+                this.maskClosable && this.cancel();
             },
-            close() {
+            cancel() {
                 this.loading = false;
-                this.$emit('on-close');
+                this.$emit('on-cancel');
                 this.$emit('input', false);
             },
+
             confirm() {
-                this.$emit('on-confirm', this.async ? () => {
-                    this.loading = false;
-                } : null);
-                if (this.async) {
-                    this.loading = true;
-                    return;
+                const onBeforeClose = this.$listeners['before-close'];
+                const cb = () => {
+                    this.$emit('on-confirm');
+                    this.$emit('input', false);
+                };
+                if (onBeforeClose) {
+                    beforeClose.call(this, onBeforeClose, cb);
+                } else {
+                    cb();
                 }
-                this.close();
             }
         }
     }

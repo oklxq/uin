@@ -6,11 +6,15 @@
                 <template v-else>{{label}}</template>
             </span>
         </Col>
-        <Col :span="wrapperSpan">
+        <Col class="u-form__wrapper" :span="wrapperSpan">
             <slot></slot>
             <div v-if="attach||$slots.attach" class="u-form__attach">
                 <slot name="attach" v-if="$slots.attach"></slot>
                 <template v-else>{{attach}}</template>
+            </div>
+
+            <div v-if="error" class="u-form__error">
+                {{error}}
             </div>
         </Col>
     </Row>
@@ -20,11 +24,17 @@
 <script>
     import {layout} from "./form";
     import {Row, Col} from "../grid";
+    import validator from './validate';
 
     export default {
         components: {Row, Col},
         name: "FormItem",
-        mixins: [layout],
+        mixins: [layout, validator],
+        provide() {
+            return {
+                formItem: this,
+            }
+        },
         props: {
             label: [String, Number],
             labelSpan: {
@@ -35,7 +45,8 @@
                 type: [String, Number],
                 default: 22,
             },
-            attach: [String, Number]
+            attach: [String, Number],
+
         }
     }
 </script>

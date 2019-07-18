@@ -11,6 +11,9 @@ $base-width: 500px;
   position: relative;
   top: 15vh;
   margin: 0 auto;
+  border-radius: $radius;
+  border-bottom: solid 1px;
+  @include relief($border-color);
   @at-root &--sm {
     width: $base-width - 100px;
   }
@@ -25,7 +28,9 @@ $base-width: 500px;
   }
 
   @at-root &-wrapper {
+    pointer-events: all;
     position: fixed;
+    perspective: 150px;
     left: 0;
     top: 0;
     right: 0;
@@ -75,15 +80,15 @@ $base-width: 500px;
     vertical-align: top;
     font-size: 40px;
     color: $warning-color;
-    @each $type in success warning error{
-      &[class$=#{$type}]{
+    @each $type in success warning error {
+      &[class$=#{$type}] {
         color: getColor($type);
       }
     }
   }
   @at-root &__main {
     display: table-cell;
-    vertical-align: top;
+    vertical-align: middle;
     font-size: 14px;
   }
   @at-root &__footer {
@@ -98,13 +103,8 @@ $base-width: 500px;
   transition: opacity $transition-time;
 
   .#{$name} {
-    transition: transform $transition-time $back-out, opacity $transition-time;
-  }
-}
-
-.modal-leave-active {
-  .#{$name} {
-    transition-timing-function: $back-in;
+    transition: transform $transition-time, opacity $transition-time;
+    transition-timing-function: $transition-time-function;
   }
 }
 
@@ -112,7 +112,7 @@ $base-width: 500px;
   opacity: 0;
 
   .#{$name} {
-    transform: translateY(-100px);
+    transform: scale(.9) translateY(-20%);
     opacity: 0;
   }
 }
@@ -120,5 +120,6 @@ $base-width: 500px;
 html, body {
   &.has-modal {
     overflow: hidden !important;
+    pointer-events: none;
   }
 }

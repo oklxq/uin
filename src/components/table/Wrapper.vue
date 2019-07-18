@@ -6,9 +6,9 @@
             <span v-if="bordered" class="u-table-sim-border" left></span>
             <span v-if="bordered" class="u-table-sim-border" right></span>
             <RawTable></RawTable>
-            <RawTable fixed="top" v-if="maxHeight"></RawTable>
-            <RawTable fixed="left" v-if="leftColumns.length"></RawTable>
-            <RawTable fixed="top-left" v-if="leftColumns.length && maxHeight"></RawTable>
+            <RawTable ref="top" fixed="top" v-if="showHeader && maxHeight"></RawTable>
+            <RawTable ref="left" fixed="left" v-if="leftColumns.length"></RawTable>
+            <RawTable ref="topLeft" fixed="top-left" v-if="showHeader && leftColumns.length && maxHeight"></RawTable>
         </div>
         <div class="u-table__footer">
             <Pagination :total-page="100"></Pagination>
@@ -19,7 +19,6 @@
 <script>
     import RawTable from './Table';
     import Pagination from './Pagination';
-
     export default {
         name: "Wrapper",
         components: {RawTable, Pagination},
@@ -67,5 +66,21 @@
             window.addEventListener('resize', handleResize);
             this.$on('hook:beforeDestroy', handleResize);
         },
+
+        methods: {
+            __resize__(data) {
+                const {top, left, topLeft} = this.$refs;
+                [top,left,topLeft].forEach(o=>{
+                   o && o.resize(data);
+                });
+            },
+            __scroll__(data){
+                const {top, left, topLeft} = this.$refs;
+                [top,left,topLeft].forEach(o=>{
+                    o && o.scroll(data);
+                });
+            }
+
+        }
     }
 </script>

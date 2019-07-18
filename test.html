@@ -5,16 +5,45 @@
     <title>Title</title>
     <link rel="stylesheet" href="./dist/uin.css">
 
-    <script  src="https://vuejs.org/js/vue.js"></script>
-<!--    <script crossorigin="anonymous" integrity="sha384-/akamCRnflySW3CYATb1tG4cZUVrkVT2+s6Q150JJNJ4mv8nhvL/V7rPgmzX8scM" src="https://lib.baomitu.com/vue/2.5.22/vue.min.js"></script>-->
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <!--    <script crossorigin="anonymous" integrity="sha384-/akamCRnflySW3CYATb1tG4cZUVrkVT2+s6Q150JJNJ4mv8nhvL/V7rPgmzX8scM" src="https://lib.baomitu.com/vue/2.5.22/vue.min.js"></script>-->
     <script src="./dist/uin.js"></script>
     <style>
-        #app{
+        #app {
             padding: 100px;
         }
     </style>
 </head>
 <body>
+<div style="transform: none">
+    <div style="border: solid;width: 300px;height: 200px;margin: 100px;overflow: auto;">
+        <span style="position: fixed;top: 0;width: 50px;height: 50px;background: red"></span>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+        <p>dasd</p>
+    </div>
+
+</div>
 <select name="" id="">
     <option value="1">
         <ul>
@@ -38,18 +67,35 @@
 
 <script>
     var app = new Vue({
-        data:{
-            name:'xxx',
-            list:[2,3,4]
+        data: {
+            name: 'xxx',
+            list: [2, 3, 4]
         },
-        el:'#app',
-        methods:{
-            fo(){
+        el: '#app',
+        methods: {
+            fo() {
                 //alert();
                 console.log('fff')
             }
         }
-    })
+    });
+
+
+    function A() {
+        this.name='hello';
+    }
+
+    function B() {
+        // A.call(this);
+    }
+
+    B.prototype = new A();
+
+    var b1 = new B();
+    var a1 = new A();
+    console.log(b1 instanceof A);
+    console.log(a1 instanceof B);
+    console.log(b1.name);
 </script>
 </body>
 </html>

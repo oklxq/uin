@@ -8,6 +8,7 @@ function tabClick(target, index) {
     if(bar){
         bar.style.left = target.offsetLeft + 'px';
         bar.style.width = target.clientWidth + 2 + 'px';
+
     }
 
 

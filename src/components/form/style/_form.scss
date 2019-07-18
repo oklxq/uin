@@ -12,8 +12,15 @@
     }
 
   }
+  @at-root &__wrapper{
+    position: relative;
+  }
   @at-root &__attach {
     color: lighten(#000, 40);
+    margin-top: 5px;
+  }
+  @at-root &__error{
+    color: $error-color;
     margin-top: 5px;
   }
 

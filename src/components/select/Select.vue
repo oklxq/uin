@@ -56,6 +56,7 @@
         }
     }
 
+
     export default {
         mixins: [formMixin],
         components: {List, ListItem, CInput, Option, Icon},
@@ -67,13 +68,14 @@
                 select: this,
             }
         },
+
         watch: {
             value() {
                 const {value, val} = this;
                 if (!isEq(value, val)) {
                     this.val = value;
                 }
-            }
+            },
         },
         computed: {
             current: {
@@ -129,7 +131,7 @@
                         this.current = o;
                     }
                 });
-            })
+            });
         },
 
         props: {
@@ -161,6 +163,6 @@
                 this.scroll = this.$el.querySelector('ul').scrollTop;
                 this.isShow = false;
             }
-        }
+        },
     }
 </script>

@@ -11,6 +11,10 @@ export function isBoolean(val) {
     return typeof val === 'boolean';
 }
 
+export function isArray(val) {
+    return Array.isArray(val);
+}
+
 export function isBasic(val) {
     return isString(val) || isNumber(val) || isBoolean(val)
 }

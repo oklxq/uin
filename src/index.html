@@ -1,206 +1,113 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <style>
         #app {
-            padding: 100px;
-        }
-
-        .box {
-            background: #ccc;
-            height: 100px;
-            border: solid 1px red;
-        }
-        [v-cloak]{
-            display: none;
+            margin: 50px 100px;
         }
     </style>
 </head>
 <body>
-<svg width="50" height="50">
-    <circle cx="25" cy="25" r="20" stroke="#ff0000" stroke-width="2" fill="transparent"></circle>
-</svg>
-<div id="app" v-cloak>
-    <u-tab>
-        <u-tab-item title="2">
-            methods: {
-            handler(){
-            this.vnode = this.$render(this.vnode);
-            }
-            }
-            注: 我也不想用complie把父组件html变成vnode, 请问有什么好的最佳实践吗?
-
-            自己回答下,
-            实例上有$createElement(), 所以上面可以改完
-
-            methods: {
-            handler(){
-            this.vnode = this.$createElement('<v-xxx/>');
-            }
-            } ```
-        </u-tab-item>
-        <u-tab-item title="3">
-            何时使用#
-            提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
-            <br>
-            Ant Design 依次提供了三级选项卡，分别用于不同的场景。
-            <br>
-
-            卡片式的页签，提供可关闭的样式，常用于容器顶部。
-            <br>
-
-            标准线条式页签，用于容器内部的主功能切换，这是最常用的 Tabs。
-
-            RadioButton 可作为更次级的页签来使用。
-
-
-        </u-tab-item>
-    </u-tab>
-    <br>
-    <br>
-    <u-table :max-height="200" hover dashed bordered :data="arr">
-        <u-table-column fixed="left" width="180" title="id" field="id">
-            <template v-slot:header="row">
-                <u-btn type="primary">表头</u-btn>
-            </template>
-            <template v-slot="row">
-                <p>hello</p>
-            </template>
-        </u-table-column>
-        <u-table-column v-for="i in 20" title="name" field="name"></u-table-column>
-    </u-table>
-    <br>
-    <br>
-    <br>
-
-    <span v-tooltip.click="'hellohellohelello'">hello</span>
-    <span>hello</span>
-    <span v-tooltip="'hellohellohelello'">sadasdadhello</span>
-    <u-checkbox checked disabled></u-checkbox>
-    <u-icon type="c-alert"></u-icon>
-    <u-modal async center header="提示" v-model="mo" @on-confirm="handleCon">
-        自定义页脚
-        更复杂的例子，自定义了页脚的按钮，点击提交后进入 loading 状态，完成后关闭。
-
-        不需要默认确定取消按钮时，你可以把 footer 设为 null。
-        <!--        <p v-for="i in 100">{{i}}-00asdasd</p>-->
-    </u-modal>
-    <u-input clearable>
-        <span slot="append">@</span>
-    </u-input>
-    <u-btn type="primary" :loading="mo2" @click.native="msg" v-tooltip.click="'hellohellohelello'">确定</u-btn>
-    <u-btn type="success" @click.native="mo=true">确定</u-btn>
-    <u-btn type="error" @click.native="shom">确定</u-btn>
-    <u-btn type="warning">确定</u-btn>
-    <u-slider v-model="p"></u-slider>
+<div id="app">
     <div>
-        {{p}}--
-        {{c}}
+        <u-checkbox v-model="loading">loading</u-checkbox>
+        <u-checkbox v-model="disabled">disabled</u-checkbox>
     </div>
-    <u-radio v-model="c" value="11">爱上的地方V型</u-radio>
-    <u-radio disabled v-model="c" value="22">22</u-radio>
-    <u-checkbox indeterminate v-model="c" true-value="22" false-value="-2">加入组织</u-checkbox>
+    <br>
+    <u-btn @click="mod=true" icon="arrow-right" :loading="loading" :disabled="disabled">确定</u-btn>
+    <u-btn @click="$LoadingBar.start()" icon="arrow-right" :loading="loading" :disabled="disabled" type="primary">确定</u-btn>
+    <u-btn @click="$LoadingBar.finish()" icon="bell" :loading="loading" :disabled="disabled" type="success">确定</u-btn>
+    <u-btn  @click="$LoadingBar.error()" :loading="loading" :disabled="disabled" type="error">确定</u-btn>
+    <u-btn :loading="loading" :disabled="disabled" type="warning">确定</u-btn>
+    <u-btn :loading="loading" :disabled="disabled" type="link">确定</u-btn>
+    <u-btn type="primary" :loading="loading" :disabled="disabled" size="sm">small</u-btn>
+    <u-btn :loading="loading" :disabled="disabled" size="md">default</u-btn>
+    <u-btn :loading="loading" :disabled="disabled" size="lg">large</u-btn>
 
+    <u-btn-group>
+        <u-btn type="warning" loading>按钮组</u-btn>
+        <u-btn type="warning">按钮组</u-btn>
+        <u-btn type="warning">按钮组</u-btn>
+    </u-btn-group>
     <br>
     <br>
+    <div>
+        <u-btn @click="showModal">弹框</u-btn>
+        <u-btn @click="showModal({center:true})">弹框（垂直居中）</u-btn>
+    </div>
+    <div>
+        <u-btn @click="$Modal.success('保存成功！')">弹框 - success</u-btn>
+        <u-btn @click="$Modal.error('保存失败','检查网络')">弹框 - error</u-btn>
+        <u-btn @click="$Modal.warning('警告','危险操作！')">弹框 - warning</u-btn>
+        <u-btn @click="$Modal.confirm('是否删除？','一些描述')">弹框 - confirm</u-btn>
+    </div>
+    <div>
+        <u-btn @click="showAsyncModal">弹窗 - 异步</u-btn>
+    </div>
 
-    <u-form layout="horizontal">
-        <u-form-item label="状态">
-            <u-input style="width: 100%"></u-input>
-        </u-form-item>
+    <u-modal center @before-confirm="beforeConfirm" v-model="mod">
+        <h1 v-for="i in 100">asdasd</h1>
+    </u-modal>
 
-        <u-form-item label="名称">
-            <u-input style="width: 100%"></u-input>
-        </u-form-item>
-
-        <u-form-item label-span="1">
-            <u-btn type="primary" html-type="submit">确定</u-btn>
-            <u-btn>重置</u-btn>
-        </u-form-item>
-    </u-form>
     <br>
-    <div class="box"></div>
-    <u-row gutter="1vw">
-        <u-col span-xs="24" span-sm="12" span="6" span-lg="3">
-            <div class="box"></div>
-        </u-col>
-        <u-col span-xs="24" span-sm="12" span="18" span-lg="12">
-            <div class="box"></div>
-        </u-col>
-    </u-row>
+    {{text}}
+    <u-input v-model="text"></u-input>
+    <u-btn @click="text='text'">text</u-btn>
+    <u-select>
+        <u-option v-for="i in 10" :value="i">{{i}}</u-option>
+    </u-select>
 </div>
 <script>
-    app = new Vue({
-        el: '#app',
-        data: {
-            arr: Array.from({length: 5}, () => {
-                return {id: Math.random(), name: Math.random()}
-            }),
-            list: [2, 3, 4],
-            sel: '2',
-            c: '',
-            cs: [],
-            p: 0,
-            mo: false,
-            mo2: false,
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                mod: false,
+                loading: false,
+                disabled: false,
+                text:''
+            }
         },
-        mounted() {
-        },
+
         methods: {
-
-            handleCon(close) {
-                // console.log(close);
-                // close();
-                setTimeout(() => {
-                    this.mo = false;
-                }, 1000);
+            beforeConfirm() {
+                return new Promise((re, rj) => {
+                    setTimeout(() => {
+                        rj();
+                    }, 1000);
+                })
             },
-            shom() {
-                this.$Modal.confirm('操作成功', 'sdadasdadad大叔大婶大').onConfirm(function () {
-                    console.log(this);
-                }.bind(this)).onClose(function () {
+            showModal(cfg) {
+                this.$Modal.show(Object.assign({
+                    title: 'hello',
+                    content: 'xxx'
+                }, cfg));
+            },
 
-                });
-                setTimeout(() => {
-                    // this.$Modal.error('操作成功', 'sdadasdadad大叔大婶大').onConfirm(function () {
-                    //     console.log(this);
-                    // }.bind(this)).onClose(function () {
-                    //
-                    // });
-                    // this.$Modal.closeAll();
-                }, 1000);
-                return;
+            showAsyncModal() {
                 this.$Modal.show({
-                    title: '删除？',
-                    content: 'hello',
-                    async: true,
-                    type: 'success',
-                    size: 'sm'
-                }).confirm(function (close) {
-                    // setTimeout(() => {
-                    //     close(true, false);
-                    // }, 1000);
-                }).close(function () {
-
-                });
-
-            },
-            msg() {
-                this.$Message.show({
-                    content: '为了实现这个需求，我们需要为Clock组件添加”状态(',
-                    type: 'error',
-                    duration: 0,
-                    extra: ['我知道了', '撤销'],
-                    onExtra(data) {
-                        console.log(data);
+                    title: 'sss',
+                    header: '提示',
+                    type: 'confirm',
+                    confirmText: '知道了',
+                    cancelText: '不再提示',
+                    content: '北京时间6月30日上午消息，美国当地时间周五，iOS开发者向苹果发起集体诉讼，向北加州地区法院提交诉状。开发者认为苹果滥用垄断权，强制设定最低价，要求App开发者每年支付99美元费用，必须将30%的销售收入交给苹果。',
+                    beforeClose() {
+                        return new Promise(r => {
+                            setTimeout(r, 2000);
+                        })
+                    },
+                    onCancel(){
+                        console.log(this);
                     }
                 });
-
             }
         }
-
     })
 </script>
 </body>
