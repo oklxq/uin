@@ -1,4 +1,4 @@
-import {isString} from "../../utils";
+import { isString } from "../../utils";
 
 function getEle(val) {
     if (isString(val)) {
@@ -9,12 +9,12 @@ function getEle(val) {
 
 export default {
     props: {
-        to: [String, HTMLElement],
+        to: [String, Object],
     },
     render() {
         return this.$slots.default;
     },
-    mounted(){
+    mounted() {
         const node = getEle(this.to);
         node && node.appendChild(this.$el);
     }

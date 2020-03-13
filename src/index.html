@@ -61,12 +61,22 @@
     <u-select>
         <u-option v-for="i in 10" :value="i">{{i}}</u-option>
     </u-select>
+
+    <u-table :data='table' hover bordered>
+        <u-table-column title="name" field='name'></u-table-column>
+        <u-table-column title="name" field='name'></u-table-column>
+    </u-table>
 </div>
 <script>
     new Vue({
         el: "#app",
         data() {
             return {
+                table:[
+                    {name:21312,age:2},
+                    {name:21312,age:2},
+                    {name:21312,age:2},
+                ],
                 mod: false,
                 loading: false,
                 disabled: false,

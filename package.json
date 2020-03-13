@@ -1,12 +1,13 @@
 {
-  "name": "niui",
+  "name": "uin",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./config/webpack/build.js",
-    "dev": "webpack-dev-server --config ./config/webpack/dev.js",
-    "test": "karma start --single-run"
+    "dev": "vuepress dev docs",
+    "test": "karma start --single-run",
+    "doc:build":"vuepress build docs"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

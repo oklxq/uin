@@ -7,7 +7,15 @@ $name: #{$prefix}tab;
     list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: solid 1px $border-color;
+    &::after{
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $border-color;
+      height: 1px;
+    }
     position: relative;
     li:not(.u-tab__header-bar) {
       display: inline-block;
@@ -58,7 +66,8 @@ $name: #{$prefix}tab;
     transition: all $transition-time;
     background: $primary-color;
     height: 2px;
-    bottom: -1px;
+    bottom: 0;
+    z-index: 2;
     pointer-events: none;
   }
   @at-root &__body {

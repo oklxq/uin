@@ -1,8 +1,7 @@
 import Message from './Message';
-import Vue from 'vue';
 import './style/index.scss';
-
-function init() {
+import Vue from 'vue';
+export default function init() {
     const wrapper = document.createElement('div');
     wrapper.className = 'u-message-wrapper';
     const MessageInstance = Vue.extend(Message);
@@ -53,3 +52,4 @@ function init() {
 }
 
 typeof document !== 'undefined' && init();
+
