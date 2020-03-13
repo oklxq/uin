@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --config ./config/webpack/build.js",
-    "dev": "vuepress dev docs",
+    "dev": "vuepress dev src/docs",
     "test": "karma start --single-run",
-    "doc:build":"vuepress build docs"
+    "docs:build":"vuepress build src/docs",
+    "deploy": "cmd deploy.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
