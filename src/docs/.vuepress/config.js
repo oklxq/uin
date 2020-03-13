@@ -1,6 +1,6 @@
 module.exports = {
     title: 'uin',
-    // base: '/',
+    base: '/uin/',
     themeConfig: {
         sidebarDepth: 2,
         sidebar: [
