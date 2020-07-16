@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "feather-icons": "^4.21.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "vue": "^2.6.10"
   },
   "config": {
